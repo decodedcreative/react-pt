@@ -1,34 +1,42 @@
 import React from "react";
 import clients from "../data/clients";
 
+const dataObjectsArray = clients;
 
 // Home page component
 export default class Home extends React.Component {
-  // render
-  render() {
-    return (
-      <div className="page-home">
-        <table className="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                </tr>
-            </thead>
-            <tbody>
+    // render
+    render() {
+        return (
+            <div className="page-home">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            {
+                                Object.keys(dataObjectsArray[0]).map(
+                                    (fieldname, index) => <th key={index}>{fieldname}</th>
+                                )
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                {clients.map((client, index) => 
-                    <tr key={index}>
-                        <th scope="row">{client.id}</th>
-                        <td>{client.firstname}</td>
-                        <td>{client.surname}</td>
-                    </tr>
-                )}
+                    {
+                        dataObjectsArray.map(
+                            (dataObject, index) => 
+                                <tr key={index}>
+                                    {
+                                        Object.values(dataObjectsArray[index]).map(
+                                            (value, count) => <td key={count}>{value}</td>
+                                        )
+                                    }
+                                </tr>
+                        )
+                    }
 
-            </tbody>
-        </table>
-      </div>
-    );
-  }
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
 }
