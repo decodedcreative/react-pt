@@ -1,14 +1,14 @@
 import React from "react";
-import "../scss/main.scss";
+import "../stylesheets/main.scss";
 
 // app component
 export default class App extends React.Component {
-    // render
-    render() {
-        return (
-            <div className="container">
-                {this.props.children}
-            </div>
-        );
-    }
+  // render
+  render() {
+    return (
+      <div className="container">
+        {this.props.children}
+      </div>
+    );
+  }
 }
