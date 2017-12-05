@@ -3,7 +3,7 @@ const clients = [
 		id: 1,
 		firstname: 'James',
 		surname: 'Howell',
-		gender: 'Male'
+		gender: 'male'
 	},
 	{
 		id: 2,
