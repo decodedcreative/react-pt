@@ -1,14 +1,18 @@
-import React from "react";
-import "../stylesheets/main.scss";
+import { bindActionCreators } from 'redux';
+import {connect} from "react-redux";
+import * as actionCreators from '../actions/actionCreators';
+import Main from './Main';
 
-// app component
-export default class App extends React.Component {
-  // render
-  render() {
-    return (
-      <div className="container">
-        {this.props.children}
-      </div>
-    );
-  }
+
+// export the connected class
+function mapStateToProps(state) {
+    return {
+        clients: state.clients,
+    };
 }
+
+function mapDispatchToProps (dispatch) {
+    return bindActionCreators(actionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
