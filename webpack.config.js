@@ -3,6 +3,7 @@
 var app_root = 'src'; // the app root folder: src, src_users, etc
 var path = require('path');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
   app_root: app_root, // the app root folder, needed by the other webpack configs
@@ -35,6 +36,14 @@ module.exports = {
         loaders: ['style', 'css'],
       }
     ],
+  },
+  postcss: function () {
+
+    return {
+        defaults: [autoprefixer],
+        cleaner:  [autoprefixer({ browsers: ['IE 10', 'IE 11', 'firefox 20', 'ios_saf 8.4', 'android 4.3'] })]
+    };
+
   },
   devServer: {
     contentBase: __dirname + '/public',
