@@ -1,10 +1,9 @@
-import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { store } from "./store.js";
 import { router } from "./router.js";
-import "./scss/main.scss";
+import "./scss/styles.scss";
 
 // render the main component
 ReactDOM.render(

@@ -1,7 +1,7 @@
 import { createStore, compose } from "redux";
 import { browserHistory } from "react-router";
 import { syncHistoryWithStore} from "react-router-redux";
-
+import { createBrowserHistory } from 'history';
 import clients from './data/clients';
 import { reducers } from "./reducers/index";
 
@@ -15,7 +15,7 @@ const enhancers = compose(
 
 // create the store
 const store = createStore(reducers, defaultState, enhancers);
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(createBrowserHistory(), store);
 
 
 // export

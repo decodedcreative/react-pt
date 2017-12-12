@@ -1,58 +1,58 @@
-// http://webpack.github.io/docs/configuration.html
-// http://webpack.github.io/docs/webpack-dev-server.html
-var app_root = 'src'; // the app root folder: src, src_users, etc
-var path = require('path');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var autoprefixer = require('autoprefixer');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  app_root: app_root, // the app root folder, needed by the other webpack configs
-  entry: [
-    // http://gaearon.github.io/react-hot-loader/getstarted/
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
-    'babel-polyfill',
-    __dirname + '/' + app_root + '/index.js',
-  ],
-  output: {
-    path: __dirname + '/public/js',
-    publicPath: 'js/',
-    filename: 'bundle.js',
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loaders: ['react-hot', 'babel'],
-        exclude: /node_modules/,
-      },
-      {
-        // https://github.com/jtangelder/sass-loader
-        test: /\.scss$/,
-        loaders: ['style', 'css', 'sass'],
-      },
-      {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
-      }
-    ],
-  },
-  postcss: function () {
+    context: path.resolve(__dirname, 'src'),
+    entry: {
+        app: './index.js',
+    },
+    output: {
+        filename: 'js/bundle.js',
+        path: path.resolve(__dirname, 'dist/'),
+        publicPath: '/',                          // New
+    },
+    devServer: {
+        contentBase: path.resolve(__dirname, 'dist'),    // New
+    },
 
-    return {
-        defaults: [autoprefixer],
-        cleaner:  [autoprefixer({ browsers: ['IE 10', 'IE 11', 'firefox 20', 'ios_saf 8.4', 'android 4.3'] })]
-    };
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            },
+            {
+                test: /\.(sass|scss)$/i,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader',
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: [autoprefixer()]
+                            }
+                        },
+                        'sass-loader'
+                    ]
+                })
+            }
+        ]
+    },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+    },
+    plugins: [
+      new ExtractTextPlugin({
+        filename: 'css/styles.css',
+        allChunks: true,
+      }),
+      new HtmlWebpackPlugin()
+    ]
 
-  },
-  devServer: {
-    contentBase: __dirname + '/public',
-  },
-  plugins: [
-    new CleanWebpackPlugin(['css/main.css', 'js/bundle.js'], {
-      root: __dirname + '/public',
-      verbose: true,
-      dry: false, // true for simulation
-    }),
-  ],
+
 };
