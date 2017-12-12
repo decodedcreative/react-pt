@@ -20,10 +20,10 @@ module.exports = {
 
     module: {
         rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: 'babel-loader'
+            { 
+                test: /\.jsx?$/,         // Match both .js and .jsx files
+                exclude: /node_modules/, 
+                loader: "babel-loader"
             },
             {
                 test: /\.(sass|scss)$/i,
@@ -51,7 +51,9 @@ module.exports = {
         filename: 'css/styles.css',
         allChunks: true,
       }),
-      new HtmlWebpackPlugin()
+      new HtmlWebpackPlugin({
+        template: __dirname + '/src/index.html',
+      })
     ]
 
 

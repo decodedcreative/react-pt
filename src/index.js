@@ -6,6 +6,7 @@ import { router } from "./router.js";
 import "./scss/styles.scss";
 
 // render the main component
+
 ReactDOM.render(
     <Provider store={store}>
         {router}
